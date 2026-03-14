@@ -5,7 +5,7 @@ import Cards from "../../components/Cards";
 import Buttons from "../../components/Buttons";
 
 // backend base
-const API_URL = `${API_URL}/api/pwd`;
+const API_BASE = `${API_URL}/api/pwd`;
 
 // Tailwind-safe dynamic colors mapping
 const colorClasses = {
@@ -24,7 +24,7 @@ const AdminProfiling = () => {
 
   const fetchPWDs = async () => {
     try {
-      const { data } = await axios.get(API_URL);
+      const { data } = await axios.get(API_BASE);
       const mapped = data.map((pwd) => ({
         pwd_id: pwd.pwd_id,
         pwd_number: pwd.pwd_number || "-",
@@ -68,7 +68,7 @@ const AdminProfiling = () => {
   // CRUD
   const handleAdd = async (form) => {
     try {
-      await axios.post(API_URL, form);
+      await axios.post(API_BASE, form);
       await fetchPWDs();
       showToast("PWD added successfully!", "success");
       closeModal();
@@ -80,7 +80,7 @@ const AdminProfiling = () => {
     try {
       const id = form.pwd_id;
       const { pwd_id, ...updateData } = form;
-      await axios.put(`${API_URL}/${id}`, updateData);
+      await axios.put(`${API_BASE}/${id}`, updateData);
       await fetchPWDs();
       showToast("PWD updated successfully!", "success");
       closeModal();
@@ -93,7 +93,7 @@ const AdminProfiling = () => {
   const handleDelete = async (pwd) => {
     try {
       const id = pwd.pwd_id;
-      await axios.delete(`${API_URL}/${id}`);
+      await axios.delete(`${API_BASE}/${id}`);
       await fetchPWDs();
       showToast("PWD profile deactivated successfully!", "success");
       closeModal();
